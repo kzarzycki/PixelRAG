@@ -921,8 +921,12 @@ def _embed_tile_infos_with_engine(
                     )
                     continue
                 if cw > 875:
+                    # The chunker now splits wide tiles into <=875px columns, so
+                    # this only fires on chunks built before that fix. Re-chunk
+                    # with `pixelrag chunk --force` to recover them.
                     logger.warning(
-                        "Skipping oversized chunk %s ci=%d width %d > 875",
+                        "Skipping oversized chunk %s ci=%d width %d > 875 "
+                        "(re-chunk with --force to split it into columns)",
                         img_path,
                         ci,
                         cw,
